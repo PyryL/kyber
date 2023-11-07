@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "kyber"
+version = "1.0.0"
+description = "Implementation of Kyber encryption algorithm"
+authors = ["Pyry Lahtinen <pyry@pyry.info>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+numpy = "^1.26.1"
+pycryptodome = "^3.19.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
