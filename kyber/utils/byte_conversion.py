@@ -20,7 +20,8 @@ def bits_to_bytes(bits: list[int]) -> bytearray:
     For example, input `[1,0,0,0,0,1,0,1]` outputs a byte `0b10000101 = 133`.
     `len(return_list) = len(input_list) / 8`
     """
-    assert len(bits) % 8 == 0
+    if  len(bits) % 8 != 0:
+        raise ValueError("bit count should be multipla of 8")
     result = bytearray()
     for i in range(0, len(bits), 8):
         bytestr = "".join([str(int(a)) for a in bits[i:i+8]])
