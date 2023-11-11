@@ -1,6 +1,6 @@
 import numpy as np
-from kyber.utils.byte_conversion import bytes_to_bits, bits_to_bytes
 from numpy.polynomial.polynomial import Polynomial
+from kyber.utils.byte_conversion import bytes_to_bits, bits_to_bytes
 
 def encode(pols: list[Polynomial], l: int) -> bytes:
     """

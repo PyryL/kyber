@@ -1,6 +1,6 @@
+from random import randbytes, randint
 import numpy as np
 from numpy.polynomial.polynomial import Polynomial
-from random import randbytes, randint
 from kyber.constants import k, eta1, q
 from kyber.utils.pseudo_random import prf, G
 from kyber.utils.cbd import cbd

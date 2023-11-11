@@ -2,7 +2,11 @@ import numpy as np
 from numpy.polynomial.polynomial import Polynomial
 from kyber.constants import n, q
 
-def matmod(matrix: np.ndarray, pol_divisor: Polynomial = None, int_divisor: int = None) -> np.ndarray:
+def matmod(
+        matrix: np.ndarray,
+        pol_divisor: Polynomial = None,
+        int_divisor: int = None
+    ) -> np.ndarray:
     """
     Applies `polmod` to each element of the given matrix of polynomials.
     :param matrix A matrix of polynomials

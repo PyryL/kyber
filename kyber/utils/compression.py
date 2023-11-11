@@ -5,7 +5,8 @@ from kyber.utils.round import normal_round
 
 def compress(pols: list[Polynomial], d: int) -> list[Polynomial]:
     """
-    Reduces every coefficient of every polynomial in the given list to range `0...2**d-1` (inclusive).
+    Reduces every coefficient of every polynomial in the given list
+    to range `0...2**d-1` (inclusive).
     """
     result = []
     for pol in pols:

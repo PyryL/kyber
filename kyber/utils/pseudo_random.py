@@ -2,7 +2,8 @@ from Crypto.Hash import SHAKE256, SHA3_512
 
 def prf(s: bytes, b: bytes) -> bytes:
     """
-    A pseudo-random function that deterministically returns 128 bytes based on the given byte arrays.
+    A pseudo-random function that deterministically returns 128 bytes
+    based on the given byte arrays.
     Returns the same bytes whenever called with same arguments.
     Based on SHAKE256 extendable-output function.
     """
