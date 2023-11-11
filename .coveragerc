@@ -1,0 +1,9 @@
+[run]
+branch = True
+
+include =
+    kyber/**/*.py
+
+omit =
+    tests/**/*.py
+    main.py

@@ -9,6 +9,7 @@ readme = "README.md"
 python = ">=3.11,<3.13"
 numpy = "^1.26.1"
 pycryptodome = "^3.19.0"
+coverage = "^7.3.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"

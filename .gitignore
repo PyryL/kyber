@@ -1,5 +1,10 @@
 # Python
 __pycache__/
+.pytest_cache/
+
+# Coverage
+.coverage
+htmlcov/
 
 # Environment
 .vscode/
