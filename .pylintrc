@@ -1,0 +1,4 @@
+[run]
+disable =
+    missing-module-docstring,
+    missing-class-docstring
