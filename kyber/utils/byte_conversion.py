@@ -1,3 +1,4 @@
+from math import floor, log2
 
 def bytes_to_bits(byte_array: bytes) -> list[int]:
     """
@@ -27,3 +28,15 @@ def bits_to_bytes(bits: list[int]) -> bytearray:
         bytestr = "".join([str(int(a)) for a in bits[i:i+8]])
         result.append(int(bytestr, 2))
     return result
+
+def int_to_bytes(n: int) -> bytes:
+    """
+    Converts the given non-negative integer into the shortest possible byte array.
+    """
+
+    if n < 0:
+        raise ValueError()
+    byte_count = 1 if n == 0 else floor(log2(n) / 8) + 1
+    b = n.to_bytes(byte_count)
+    assert b[0] != 0 or n == 0      # should not contain leading zero (except when n=0)
+    return b
