@@ -2,7 +2,7 @@
 
 _6. - 12.11.2023_
 
-This week I started implementing basic functionality of Kyber. I ended up writing keypair generation, encryption and decryption functions of CPAPKE section of [the official specification](https://pq-crystals.org/kyber/data/kyber-specification-round3-20210804.pdf). What I didn't implement yet is conversion between polynomial matrices and byte arrays, so ciphertext and other outputs are temporarily just numpy arrays instead of data. An example usage is included in [`main.py`](main.py) and [usage guide](docs/usage.md) is now available.
+This week I started implementing basic functionality of Kyber. I ended up writing keypair generation, encryption and decryption functions of CPAPKE section of [the official specification](https://pq-crystals.org/kyber/data/kyber-specification-round3-20210804.pdf). What I didn't implement yet is conversion between polynomial matrices and byte arrays, so ciphertext and other outputs are temporarily just numpy arrays instead of data. An example usage is included in [`main.py`](/main.py) and [usage guide](/docs/usage.md) is now available.
 
 * **Monday 6.11.** Started implementing keypair generation **2h**
 * **Tuesday 7.11.** Implemented encryption **2h**
