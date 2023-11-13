@@ -6,7 +6,7 @@ def test(ctx):
 
 @task
 def coverage(ctx):
-    ctx.run("coverage run -m pytest tests/", pty=True)
+    ctx.run("coverage run -m pytest --ignore tests/test_integration.py tests/", pty=True)
 
 @task(coverage)
 def coverage_report(ctx):
