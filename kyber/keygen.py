@@ -1,12 +1,13 @@
-from random import randbytes, randint
+from random import randbytes
 import numpy as np
 from numpy.polynomial.polynomial import Polynomial
-from kyber.constants import k, eta1, q
-from kyber.utils.pseudo_random import prf, G
+from kyber.constants import k, eta1
+from kyber.utils.pseudo_random import prf, G, xof
 from kyber.utils.cbd import cbd
 from kyber.utils.modulo import matmod, polmod
 from kyber.utils.byte_conversion import int_to_bytes
 from kyber.utils.encoding import encode
+from kyber.utils.parse import parse
 
 def generate_keys() -> tuple:
     """
@@ -15,12 +16,12 @@ def generate_keys() -> tuple:
     """
 
     d = randbytes(32)
-    sigma = G(d)[32:]
+    rho, sigma = G(d)[:32], G(d)[32:]
 
     A = np.empty((k, k), Polynomial)
     for i in range(k):
         for j in range(k):
-            A[i][j] = Polynomial([randint(0, q-1) for _ in range(256)])
+            A[i][j] = parse(xof(rho, int_to_bytes(i), int_to_bytes(j)))
 
     N = 0
     s = np.empty((k, ), Polynomial)
@@ -35,13 +36,15 @@ def generate_keys() -> tuple:
         e[i] = polmod(e[i])
         N += 1
 
-    t = np.matmul(A, s) + e
+    t = np.matmul(A, s) + e     # t is a polynomial matrix with shape (k, )
     t = matmod(t)
 
     s: bytes = encode(s, 12)
+    t: bytes = encode(t, 12)
     assert len(s) == 32*12*k
+    assert len(t) == 32*12*k
 
     return (
         s,          # private key
-        (A, t)      # public key
+        t+rho       # public key
     )

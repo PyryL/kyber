@@ -6,14 +6,19 @@ from kyber.utils.pseudo_random import prf
 from kyber.utils.modulo import polmod
 from kyber.utils.compression import decompress
 from kyber.utils.encoding import decode
-from kyber.constants import k, eta1, eta2
+from kyber.constants import k, eta1, eta2, n
 from kyber.utils.byte_conversion import int_to_bytes
+from kyber.utils.parse import parse
+from kyber.utils.pseudo_random import xof
 
 class Encrypt:
     def __init__(self, public_key: bytes) -> None:
         self._pk = public_key
         self._m = randbytes(32)
         self._r = randbytes(32)
+        assert len(self._pk) == 12 * k * int(n/8) + 32
+        assert len(self._m) == 32
+        assert len(self._r) == 32
 
     @property
     def secret(self) -> bytes:
@@ -25,13 +30,18 @@ class Encrypt:
         :returns Ciphertext
         """
 
-        pk = self._pk
         m = self._m
         rb = self._r
-        assert len(m) == 32
-        assert len(rb) == 32
 
-        A, t = pk
+        t, rho = self._pk[:-32], self._pk[-32:]
+        t = np.array([
+            decode(t[32*12*i : 32*12*(i+1)], 12) for i in range(len(t)//(32*12))
+        ])
+
+        A = np.empty((k, k), Polynomial)
+        for i in range(k):
+            for j in range(k):
+                A[i][j] = parse(xof(rho, int_to_bytes(i), int_to_bytes(j)))
 
         N = 0
         r = np.empty((k, ), Polynomial)
