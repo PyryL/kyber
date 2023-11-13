@@ -1,13 +1,15 @@
 import numpy as np
 from numpy.polynomial.polynomial import Polynomial
 from kyber.utils.compression import compress
-from kyber.utils.encoding import encode
+from kyber.utils.encoding import encode, decode
 from kyber.utils.modulo import polmod
+from kyber.constants import k
 
 class Decrypt:
     def __init__(self, private_key, ciphertext) -> None:
         self._sk = private_key
         self._c = ciphertext
+        assert len(self._sk) == 32*12*k
 
     def decrypt(self) -> bytes:
         """
@@ -15,7 +17,10 @@ class Decrypt:
         :returns Decrypted 32-bit shared secret
         """
 
-        s = self._sk
+        # split self._sk into chunks of length 32*12 and decode each one of them into a polynomial
+        s = np.array([
+            decode(self._sk[32*12*i : 32*12*(i+1)], 12) for i in range(len(self._sk)//(32*12))
+        ])
         u, v = self._c
 
         m: Polynomial = v - np.matmul(s.T, u)

@@ -6,6 +6,7 @@ from kyber.utils.pseudo_random import prf, G
 from kyber.utils.cbd import cbd
 from kyber.utils.modulo import matmod, polmod
 from kyber.utils.byte_conversion import int_to_bytes
+from kyber.utils.encoding import encode
 
 def generate_keys() -> tuple:
     """
@@ -36,6 +37,9 @@ def generate_keys() -> tuple:
 
     t = np.matmul(A, s) + e
     t = matmod(t)
+
+    s: bytes = encode(s, 12)
+    assert len(s) == 32*12*k
 
     return (
         s,          # private key
