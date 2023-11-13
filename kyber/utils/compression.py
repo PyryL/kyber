@@ -22,12 +22,21 @@ def decompress(pol: Polynomial, d: int) -> Polynomial:
     return Polynomial([decompress_int(c, d) for c in pol.coef])
 
 def compress_int(x: int, d: int) -> int:
+    """
+    Performs compression to a single integer
+    by reducing it to range `0...2**d-1` (inclusive).
+    """
     assert d < ceil(log2(q))
     result = normal_round((2**d / q) * x) % (2**d)
-    assert 0 <= result and result <= 2**d-1
+    assert 0 <= result <= 2**d-1
     return result
 
 def decompress_int(x: int, d: int) -> int:
+    """
+    Performs decompression to a single integer
+    by multiplying it by `q/(2**d)`.
+    :param x The integer to be decompressed, in range `0...2**d-1` (inclusive).
+    """
     assert d < ceil(log2(q))
     if x < 0 or x > 2**d-1:
         raise ValueError()

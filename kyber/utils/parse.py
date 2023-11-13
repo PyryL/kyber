@@ -1,10 +1,11 @@
-from numpy.polynomial.polynomial import Polynomial
-import numpy as np
 from math import floor
 from typing import Generator
+from numpy.polynomial.polynomial import Polynomial
+import numpy as np
 from kyber.constants import n, q
 
 def byte_to_int(b: bytes) -> int:
+    """Returns the unsigned integer that the given big-endian byte array represents."""
     return int.from_bytes(b)
 
 def parse(stream: Generator[bytes, None, None]) -> Polynomial:

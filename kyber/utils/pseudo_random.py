@@ -1,5 +1,5 @@
-from Crypto.Hash import SHAKE256, SHA3_512, SHAKE128
 from typing import Generator
+from Crypto.Hash import SHAKE256, SHA3_512, SHAKE128
 
 def prf(s: bytes, b: bytes) -> bytes:
     """

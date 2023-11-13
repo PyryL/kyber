@@ -21,6 +21,7 @@ class Encrypt:
 
     @property
     def secret(self) -> bytes:
+        """The 32-bit shared secret that was encrypted."""
         return self._m
 
     def encrypt(self):
