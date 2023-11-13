@@ -16,9 +16,8 @@ class Encrypt:
         self._pk = public_key
         self._m = randbytes(32)
         self._r = randbytes(32)
-        assert len(self._pk) == 12 * k * int(n/8) + 32
-        assert len(self._m) == 32
-        assert len(self._r) == 32
+        if len(self._pk) != 12 * k * int(n/8) + 32:
+            raise ValueError()
 
     @property
     def secret(self) -> bytes:
