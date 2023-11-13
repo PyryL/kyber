@@ -9,7 +9,8 @@ class Decrypt:
     def __init__(self, private_key, ciphertext) -> None:
         self._sk = private_key
         self._c = ciphertext
-        assert len(self._sk) == 32*12*k
+        if len(self._sk) != 32*12*k:
+            raise ValueError()
 
     def decrypt(self) -> bytes:
         """
