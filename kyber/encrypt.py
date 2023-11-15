@@ -62,10 +62,10 @@ class Encrypt:
 
         u = matmod(u)
         v = polmod(v)
-        
+
         u = compress(u, du)
         v = compress([v], dv)
-        
+
         u = encode(u, du)
         v = encode(v, dv)
 
