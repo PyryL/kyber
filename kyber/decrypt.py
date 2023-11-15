@@ -20,17 +20,12 @@ class Decrypt:
         :returns Decrypted 32-bit shared secret
         """
 
-        # split self._sk into chunks of length 32*12 and decode each one of them into a polynomial
-        s = np.array([
-            decode(self._sk[32*12*i : 32*12*(i+1)], 12) for i in range(len(self._sk)//(32*12))
-        ])
+        s = np.array(decode(self._sk, 12))
 
         u, v = self._c[:du*k*n//8], self._c[du*k*n//8:]
 
-        u = np.array([
-            decode(u[32*du*i : 32*du*(i+1)], du) for i in range(len(u)//(32*du))
-        ])
-        v = decode(v, dv)
+        u = decode(u, du)
+        v = decode(v, dv)[0]
 
         u = np.array([decompress(pol, du) for pol in u])
         v = decompress(v, dv)

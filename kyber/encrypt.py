@@ -34,9 +34,7 @@ class Encrypt:
         rb = self._r
 
         t, rho = self._pk[:-32], self._pk[-32:]
-        t = np.array([
-            decode(t[32*12*i : 32*12*(i+1)], 12) for i in range(len(t)//(32*12))
-        ])
+        t = np.array(decode(t, 12))
 
         A = np.empty((k, k), Polynomial)
         for i in range(k):
@@ -60,7 +58,7 @@ class Encrypt:
         e2 = polmod(e2)
 
         u = np.matmul(A.T, r) + e1
-        v = np.matmul(t.T, r) + e2 + decompress(decode(m, 1), 1)
+        v = np.matmul(t.T, r) + e2 + decompress(decode(m, 1)[0], 1)
 
         u = matmod(u)
         v = polmod(v)
