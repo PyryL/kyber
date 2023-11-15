@@ -3,10 +3,10 @@ import numpy as np
 from numpy.polynomial.polynomial import Polynomial
 from kyber.utils.cbd import cbd
 from kyber.utils.pseudo_random import prf
-from kyber.utils.modulo import polmod
-from kyber.utils.compression import decompress
-from kyber.utils.encoding import decode
-from kyber.constants import k, eta1, eta2, n
+from kyber.utils.modulo import matmod, polmod
+from kyber.utils.compression import compress, decompress
+from kyber.utils.encoding import encode, decode
+from kyber.constants import k, eta1, eta2, n, du, dv
 from kyber.utils.byte_conversion import int_to_bytes
 from kyber.utils.parse import parse
 from kyber.utils.pseudo_random import xof
@@ -62,7 +62,16 @@ class Encrypt:
         u = np.matmul(A.T, r) + e1
         v = np.matmul(t.T, r) + e2 + decompress(decode(m, 1), 1)
 
-        u = [polmod(item) for item in u]
+        u = matmod(u)
         v = polmod(v)
+        
+        u = compress(u, du)
+        v = compress([v], dv)
+        
+        u = encode(u, du)
+        v = encode(v, dv)
 
-        return (u, v)
+        assert len(u) == du * k * n//8
+        assert len(v) == dv * n//8
+
+        return u + v

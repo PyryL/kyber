@@ -1,9 +1,9 @@
 import numpy as np
 from numpy.polynomial.polynomial import Polynomial
-from kyber.utils.compression import compress
+from kyber.utils.compression import compress, decompress
 from kyber.utils.encoding import encode, decode
 from kyber.utils.modulo import polmod
-from kyber.constants import k
+from kyber.constants import n, k, du, dv
 
 class Decrypt:
     def __init__(self, private_key, ciphertext) -> None:
@@ -22,7 +22,16 @@ class Decrypt:
         s = np.array([
             decode(self._sk[32*12*i : 32*12*(i+1)], 12) for i in range(len(self._sk)//(32*12))
         ])
-        u, v = self._c
+
+        u, v = self._c[:du*k*n//8], self._c[du*k*n//8:]
+
+        u = np.array([
+            decode(u[32*du*i : 32*du*(i+1)], du) for i in range(len(u)//(32*du))
+        ])
+        v = decode(v, dv)
+
+        u = np.array([decompress(pol, du) for pol in u])
+        v = decompress(v, dv)
 
         m: Polynomial = v - np.matmul(s.T, u)
         m = polmod(m)
