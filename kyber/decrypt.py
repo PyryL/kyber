@@ -11,6 +11,8 @@ class Decrypt:
         self._c = ciphertext
         if len(self._sk) != 32*12*k:
             raise ValueError()
+        if len(self._c) != du*k*n//8 + dv*n//8:
+            raise ValueError()
 
     def decrypt(self) -> bytes:
         """
