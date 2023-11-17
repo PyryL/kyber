@@ -1,5 +1,5 @@
 from typing import Generator
-from Crypto.Hash import SHAKE256, SHA3_512, SHAKE128
+from Crypto.Hash import SHAKE256, SHA3_512, SHAKE128, SHA3_256
 
 def prf(s: bytes, b: bytes) -> bytes:
     """
@@ -12,6 +12,12 @@ def prf(s: bytes, b: bytes) -> bytes:
     shake = SHAKE256.new()
     shake.update(s + b)
     return shake.read(128)
+
+def kdf(b: bytes, l: int) -> bytes:
+    """Deterministically generate and return `l` pseudo-random bytes from the given seed."""
+    shake = SHAKE256.new()
+    shake.update(b)
+    return shake.read(l)
 
 def G(b: bytes) -> bytes:
     """
@@ -30,3 +36,9 @@ def xof(p: bytearray, i: bytes, j: bytes) -> Generator[bytes, None, None]:
     shake.update(p + i + j)
     while True:
         yield shake.read(1)
+
+def H(b: bytes) -> bytes:
+    """Deterministically returns 32 pseudo-random bytes."""
+    h = SHA3_256.new()
+    h.update(b)
+    return h.digest()
