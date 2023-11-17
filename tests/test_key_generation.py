@@ -1,5 +1,5 @@
 import unittest
-from kyber.keygen import generate_keys
+from kyber.encryption import generate_keys
 from kyber.constants import k, n
 
 class TestKeyGeneration(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 from random import seed, randbytes
-from kyber.encrypt import Encrypt
+from kyber.encryption import Encrypt
 from kyber.constants import k, n, du, dv
 
 class TestEncryption(unittest.TestCase):

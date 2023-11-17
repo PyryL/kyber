@@ -1,7 +1,5 @@
 from random import randbytes
-from kyber.keygen import generate_keys
-from kyber.encrypt import Encrypt
-from kyber.decrypt import Decrypt
+from kyber.encryption import generate_keys, Encrypt, Decrypt
 from kyber.utils.pseudo_random import H, G, kdf
 from kyber.constants import k, n, du, dv
 

@@ -1,6 +1,6 @@
 import unittest
 from random import seed, randbytes
-from kyber.decrypt import Decrypt
+from kyber.encryption import Decrypt
 from kyber.constants import k, n, du, dv
 
 class TestDecryption(unittest.TestCase):

@@ -1,7 +1,5 @@
 import unittest
-from kyber.keygen import generate_keys
-from kyber.encrypt import Encrypt
-from kyber.decrypt import Decrypt
+from kyber.encryption import generate_keys, Encrypt, Decrypt
 
 class TestIntegration(unittest.TestCase):
     def test_encryption_symmetry(self):
