@@ -54,6 +54,8 @@ def ccakem_decrypt(ciphertext: bytes, private_key: bytes) -> bytes:
     h = private_key[24*k*n//8+32 : 24*k*n//8+64]
     z = private_key[24*k*n//8+64 :]
 
+    assert h == H(pk)
+
     m = Decrypt(sk, ciphertext).decrypt()
     Kr = G(m + h)
     K, r = Kr[:32], Kr[32:]

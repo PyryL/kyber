@@ -3,7 +3,7 @@ from random import seed, randbytes
 from kyber.encryption import Decrypt
 from kyber.constants import k, n, du, dv
 
-class TestDecryption(unittest.TestCase):
+class TestDecrypt(unittest.TestCase):
     def setUp(self):
         seed(42)
 
