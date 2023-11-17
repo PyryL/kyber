@@ -12,10 +12,12 @@ from kyber.utils.parse import parse
 from kyber.utils.pseudo_random import xof
 
 class Encrypt:
-    def __init__(self, public_key: bytes) -> None:
+    def __init__(self, public_key: bytes, m: bytes = None, r: bytes = None) -> None:
         self._pk = public_key
-        self._m = randbytes(32)
-        self._r = randbytes(32)
+        self._m = m if m is not None else randbytes(32)
+        self._r = r if r is not None else randbytes(32)
+        assert len(self._m) == 32
+        assert len(self._r) == 32
         if len(self._pk) != 12 * k * int(n/8) + 32:
             raise ValueError()
 
