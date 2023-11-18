@@ -12,17 +12,17 @@ class TestEncoding(unittest.TestCase):
         self.polynomial2 = Polynomial([randint(0, 1) for _ in range(256)])
 
     def test_encoding_symmetry(self):
-        polynomial = decode(self.data, self.l)
-        restored_data = encode([polynomial], self.l)
+        polynomials = decode(self.data, self.l)
+        restored_data = encode(polynomials, self.l)
         self.assertEqual(self.data, restored_data)
 
     def test_decode_coefficients(self):
-        polynomial = decode(self.data, self.l)
+        polynomial = decode(self.data, self.l)[0]
         for c in polynomial.coef:
             self.assertTrue(0 <= int(c) or int(c) <= 2**self.l-1)
 
     def test_decode_degree(self):
-        polynomial = decode(self.data, self.l)
+        polynomial = decode(self.data, self.l)[0]
         self.assertEqual(len(polynomial.coef), 256)
 
     def test_decode_raises_with_invalid_argument_length(self):

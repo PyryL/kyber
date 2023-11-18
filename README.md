@@ -10,10 +10,11 @@ Implementation of [CRYSTALS-Kyber](https://pq-crystals.org/kyber/index.shtml) en
 
 * [Requirements specification](docs/requirements.md)
 * [Implementation]()
-* [Testing]()
+* [Testing](docs/tests.md)
 * [Usage guide](docs/usage.md)
 
 ### Weekly reports
 
 * [Week 1](docs/week-1.md)
 * [Week 2](docs/week-2.md)
+* [Week 3](docs/week-3.md)

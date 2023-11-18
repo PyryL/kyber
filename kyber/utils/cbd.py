@@ -3,7 +3,8 @@ from kyber.utils.byte_conversion import bytes_to_bits
 
 def cbd(b: bytes, eta: int) -> Polynomial:
     """
-    Deterministically creates and returns a polynomial (degree 255) from the given byte array (length 64*eta).
+    Deterministically creates and returns a polynomial (degree 255)
+    from the given byte array (length 64*eta).
     """
 
     if len(b) != 64*eta:

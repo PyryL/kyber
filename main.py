@@ -1,20 +1,10 @@
-from kyber.keygen import generate_keys
-from kyber.encrypt import Encrypt
-from kyber.decrypt import Decrypt
+from kyber.ccakem import ccakem_generate_keys, ccakem_encrypt, ccakem_decrypt
 
 def main():
-    # generate keypair
-    private_key, public_key = generate_keys()
+    private_key, public_key = ccakem_generate_keys()
+    ciphertext, shared_secret1 = ccakem_encrypt(public_key)
+    shared_secret2 = ccakem_decrypt(ciphertext, private_key)
 
-    # encrypt
-    encrypter = Encrypt(public_key)
-    ciphertext = encrypter.encrypt()
-    shared_secret1 = encrypter.secret
-    
-    # decrypt
-    shared_secret2 = Decrypt(private_key, ciphertext).decrypt()
-
-    # analyse
     assert shared_secret1 == shared_secret2
     assert len(shared_secret1) == 32
     print("shared secret", shared_secret1.hex())

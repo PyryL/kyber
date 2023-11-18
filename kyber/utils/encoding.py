@@ -32,17 +32,21 @@ def encode(pols: list[Polynomial], l: int) -> bytes:
     assert len(result) == 32*l*len(pols)
     return bytes(result)
 
-def decode(b: bytes, l: int) -> Polynomial:
+def decode(b: bytes, l: int) -> list[Polynomial]:
     """
-    Converts the given byte array (length `32*l`) into a polynomial (degree 255)
+    Converts the given byte array (length `32*l*x` for some integer x) into
+    a list of polynomials (length x, each degree 255)
     in which each coefficient is in range `0...2**l-1` (inclusive).
     """
 
-    if len(b) != 32*l:
+    if len(b) % 32*l != 0:
         raise ValueError()
-    bits = bytes_to_bits(b)
-    f = np.empty((256, ))
-    for i in range(256):
-        f[i] = sum(bits[i*l+j]*2**j for j in range(l))      # accesses each bit exactly once
-        assert 0 <= f[i] and f[i] <= 2**l-1
-    return Polynomial(f)
+    result = []
+    for t in range(len(b) // (32*l)):
+        bits = bytes_to_bits(b[32*l*t : 32*l*(t+1)])
+        f = np.empty((256, ))
+        for i in range(256):
+            f[i] = sum(bits[i*l+j]*2**j for j in range(l))      # accesses each bit exactly once
+            assert 0 <= f[i] and f[i] <= 2**l-1
+        result.append(Polynomial(f))
+    return result
