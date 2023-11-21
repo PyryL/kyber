@@ -11,7 +11,7 @@ def compress(pols: list[PolynomialRing], d: int) -> list[PolynomialRing]:
     """
     result = []
     for pol in pols:
-        f = [compress_int(c, d) for c in pol.coef]
+        f = [compress_int(c, d) for c in pol.coefs]
         result.append(PolynomialRing(f))
     return result
 
@@ -20,7 +20,7 @@ def decompress(pol: PolynomialRing, d: int) -> PolynomialRing:
     Multiplies each coefficient of the given polynomial by `q/(2**d)`.
     Each coefficient of the given polynomial must be in range `0...2^d-1` (inclusive).
     """
-    return PolynomialRing([decompress_int(c, d) for c in pol.coef])
+    return PolynomialRing([decompress_int(c, d) for c in pol.coefs])
 
 def compress_int(x: int, d: int) -> int:
     """

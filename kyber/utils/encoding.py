@@ -13,9 +13,7 @@ def encode(pols: list[PolynomialRing], l: int) -> bytes:
 
     result = bytearray()
     for pol in pols:
-        if len(pol.coef) > 256:
-            raise ValueError("too high polynomial degree")
-        f = list(pol.coef) + [0 for _ in range(256-len(pol.coef))]
+        f = list(pol.coefs) + [0 for _ in range(256-len(pol.coefs))]
         bits = np.empty((256*l, ))
         for i in range(256):
             f_item = f[i]

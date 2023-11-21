@@ -56,7 +56,6 @@ class Encrypt:
             N += 1
 
         e2 = cbd(prf(rb, int_to_bytes(N)), eta2)
-        e2 = polmod(e2)
 
         u = np.matmul(A.T, r) + e1
         v = np.matmul(t.T, r) + e2 + decompress(decode(m, 1)[0], 1)
