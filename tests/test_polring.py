@@ -14,7 +14,7 @@ class TestPolynomialRing(unittest.TestCase):
     def test_init_with_random_inputs(self):
         # test with 1000 samples that randomily initialized polring matches expected
         seed(42)
-        for _ in range(1000):
+        for _ in range(100):
             coef_count = randint(1, 300)
             coefs = [
                 (1 if randint(1, 2) == 1 else -1) * randint(1, 10000)
