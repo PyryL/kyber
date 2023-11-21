@@ -8,6 +8,7 @@ from kyber.utils.modulo import matmod, polmod
 from kyber.utils.byte_conversion import int_to_bytes
 from kyber.utils.encoding import encode
 from kyber.utils.parse import parse
+from kyber.entities.polring import PolynomialRing
 
 def generate_keys() -> tuple:
     """
@@ -18,26 +19,23 @@ def generate_keys() -> tuple:
     d = randbytes(32)
     rho, sigma = G(d)[:32], G(d)[32:]
 
-    A = np.empty((k, k), Polynomial)
+    A = np.empty((k, k), PolynomialRing)
     for i in range(k):
         for j in range(k):
             A[i][j] = parse(xof(rho, int_to_bytes(i), int_to_bytes(j)))
 
     N = 0
-    s = np.empty((k, ), Polynomial)
+    s = np.empty((k, ), PolynomialRing)
     for i in range(k):
         s[i] = cbd(prf(sigma, int_to_bytes(N)), eta1)
-        s[i] = polmod(s[i])
         N += 1
 
-    e = np.empty((k, ), Polynomial)
+    e = np.empty((k, ), PolynomialRing)
     for i in range(k):
         e[i] = cbd(prf(sigma, int_to_bytes(N)), eta1)
-        e[i] = polmod(e[i])
         N += 1
 
     t = np.matmul(A, s) + e     # t is a polynomial matrix with shape (k, )
-    t = matmod(t)
 
     s: bytes = encode(s, 12)
     t: bytes = encode(t, 12)

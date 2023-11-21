@@ -1,7 +1,8 @@
 from numpy.polynomial.polynomial import Polynomial
 from kyber.utils.byte_conversion import bytes_to_bits
+from kyber.entities.polring import PolynomialRing
 
-def cbd(b: bytes, eta: int) -> Polynomial:
+def cbd(b: bytes, eta: int) -> PolynomialRing:
     """
     Deterministically creates and returns a polynomial (degree 255)
     from the given byte array (length 64*eta).
@@ -20,4 +21,4 @@ def cbd(b: bytes, eta: int) -> Polynomial:
             b += bits[2 * i * eta + eta + j]
         f.append(a-b)
     assert len(f) == 256
-    return Polynomial(f)
+    return PolynomialRing(f)

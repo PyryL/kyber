@@ -1,8 +1,9 @@
 import numpy as np
 from numpy.polynomial.polynomial import Polynomial
 from kyber.utils.byte_conversion import bytes_to_bits, bits_to_bytes
+from kyber.entities.polring import PolynomialRing
 
-def encode(pols: list[Polynomial], l: int) -> bytes:
+def encode(pols: list[PolynomialRing], l: int) -> bytes:
     """
     Converts the given polynomial (degree 255, each coefficient in range `0...2**l-1` inclusive)
     into a byte array of lenght `32*l`.
@@ -32,7 +33,7 @@ def encode(pols: list[Polynomial], l: int) -> bytes:
     assert len(result) == 32*l*len(pols)
     return bytes(result)
 
-def decode(b: bytes, l: int) -> list[Polynomial]:
+def decode(b: bytes, l: int) -> list[PolynomialRing]:
     """
     Converts the given byte array (length `32*l*x` for some integer x) into
     a list of polynomials (length x, each degree 255)
@@ -48,5 +49,5 @@ def decode(b: bytes, l: int) -> list[Polynomial]:
         for i in range(256):
             f[i] = sum(bits[i*l+j]*2**j for j in range(l))      # accesses each bit exactly once
             assert 0 <= f[i] and f[i] <= 2**l-1
-        result.append(Polynomial(f))
+        result.append(PolynomialRing(f))
     return result
