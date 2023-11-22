@@ -4,7 +4,7 @@ from numpy.polynomial.polynomial import Polynomial
 class PolynomialRing:
     def __init__(self, coefs: list[int]) -> None:
         """Input `(1, 2, 3)` represents `1+2x+3x^2`."""
-        self._coefs = coefs
+        self._coefs = [int(c) for c in coefs]
         self._coef_limit = q
         self._degree_limit = n-1
         self._apply_limits()
@@ -14,9 +14,8 @@ class PolynomialRing:
         return self._coefs
 
     def _apply_limits(self) -> None:
-        # apply degree limit
-        divisor = Polynomial([1] + [0 for _ in range(self._degree_limit)] + [1])    # x^n + 1
-        self._coefs = [int(c) for c in (Polynomial(self.coefs) % divisor).coef]
+        # apply degree limit by dividing self by x^n+1
+        self._apply_polynomial_modulo_limit()
 
         # apply coef limit
         for i in range(len(self._coefs)):
@@ -25,6 +24,15 @@ class PolynomialRing:
         # remove trailing zero coefficients
         while len(self._coefs) > 0 and self._coefs[-1] == 0:
             self._coefs.pop()
+
+    def _apply_polynomial_modulo_limit(self) -> None:
+        """Replaces `self._coefs` with the remainder of division `self._coefs / (x^n+1)`."""
+        # this is an optimal version of polynomial long division
+        while len(self._coefs) >= n+1:
+            self._coefs[-n-1] -= self._coefs[-1]
+            self._coefs[-1] = 0
+            while self._coefs[-1] == 0:
+                self._coefs.pop()
 
     def __add__(self, other: "PolynomialRing") -> "PolynomialRing":
         result = []
@@ -51,6 +59,18 @@ class PolynomialRing:
                     continue
                 result[a+b] += self.coefs[a] * other.coefs[b]
         return PolynomialRing(result)
+
+    # def modded(self) -> list[int]:
+    #     """Returns the coefs of the remainder of division self.coefs / (x^n+1)."""
+    #     r = self._coefs[:]
+
+    #     while len(r) >= n+1:
+    #         r[-n-1] -= r[-1]
+    #         r[-1] = 0
+    #         while r[-1] == 0:
+    #             r.pop()
+
+    #     return r
 
     def __eq__(self, other: "PolynomialRing") -> bool:
         return self.coefs == other.coefs

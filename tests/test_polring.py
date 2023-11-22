@@ -15,7 +15,7 @@ class TestPolynomialRing(unittest.TestCase):
         # test with 1000 samples that randomily initialized polring matches expected
         seed(42)
         for _ in range(100):
-            coef_count = randint(1, 300)
+            coef_count = randint(1, 500)
             coefs = [
                 (1 if randint(1, 2) == 1 else -1) * randint(1, 10000)
                 for _ in range(coef_count)
