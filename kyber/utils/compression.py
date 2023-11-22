@@ -1,5 +1,4 @@
 from math import log2, ceil
-from numpy.polynomial.polynomial import Polynomial
 from kyber.constants import q
 from kyber.utils.round import normal_round
 from kyber.entities.polring import PolynomialRing

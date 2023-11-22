@@ -1,5 +1,4 @@
 import unittest
-from numpy.polynomial.polynomial import Polynomial
 from random import seed, randbytes, randint
 from kyber.utils.encoding import encode, decode
 from kyber.entities.polring import PolynomialRing

@@ -1,5 +1,4 @@
 import numpy as np
-from numpy.polynomial.polynomial import Polynomial
 from kyber.utils.byte_conversion import bytes_to_bits, bits_to_bytes
 from kyber.entities.polring import PolynomialRing
 

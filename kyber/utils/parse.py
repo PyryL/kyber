@@ -1,6 +1,5 @@
 from math import floor
 from typing import Generator
-from numpy.polynomial.polynomial import Polynomial
 import numpy as np
 from kyber.constants import n, q
 from kyber.entities.polring import PolynomialRing

@@ -1,9 +1,7 @@
 from random import randbytes
 import numpy as np
-from numpy.polynomial.polynomial import Polynomial
 from kyber.utils.cbd import cbd
 from kyber.utils.pseudo_random import prf
-from kyber.utils.modulo import matmod, polmod
 from kyber.utils.compression import compress, decompress
 from kyber.utils.encoding import encode, decode
 from kyber.constants import k, eta1, eta2, n, du, dv

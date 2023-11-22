@@ -1,4 +1,3 @@
-from numpy.polynomial.polynomial import Polynomial
 from kyber.utils.byte_conversion import bytes_to_bits
 from kyber.entities.polring import PolynomialRing
 

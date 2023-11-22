@@ -1,10 +1,8 @@
 from random import randbytes
 import numpy as np
-from numpy.polynomial.polynomial import Polynomial
 from kyber.constants import k, eta1
 from kyber.utils.pseudo_random import prf, G, xof
 from kyber.utils.cbd import cbd
-from kyber.utils.modulo import matmod, polmod
 from kyber.utils.byte_conversion import int_to_bytes
 from kyber.utils.encoding import encode
 from kyber.utils.parse import parse

@@ -1,5 +1,4 @@
 from kyber.constants import q, n
-from numpy.polynomial.polynomial import Polynomial
 
 class PolynomialRing:
     def __init__(self, coefs: list[int]) -> None:

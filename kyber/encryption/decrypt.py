@@ -1,8 +1,6 @@
 import numpy as np
-from numpy.polynomial.polynomial import Polynomial
 from kyber.utils.compression import compress, decompress
 from kyber.utils.encoding import encode, decode
-from kyber.utils.modulo import polmod
 from kyber.constants import n, k, du, dv
 from kyber.entities.polring import PolynomialRing
 
@@ -31,7 +29,7 @@ class Decrypt:
         u = np.array([decompress(pol, du) for pol in u])
         v = decompress(v, dv)
 
-        m: Polynomial = v - np.matmul(s.T, u)
+        m: PolynomialRing = v - np.matmul(s.T, u)
         m: bytes = encode(compress([m], 1), 1)
 
         assert len(m) == 32
