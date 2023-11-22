@@ -59,26 +59,8 @@ class PolynomialRing:
                 result[a+b] += self.coefs[a] * other.coefs[b]
         return PolynomialRing(result)
 
-    # def modded(self) -> list[int]:
-    #     """Returns the coefs of the remainder of division self.coefs / (x^n+1)."""
-    #     r = self._coefs[:]
-
-    #     while len(r) >= n+1:
-    #         r[-n-1] -= r[-1]
-    #         r[-1] = 0
-    #         while r[-1] == 0:
-    #             r.pop()
-
-    #     return r
-
     def __eq__(self, other: "PolynomialRing") -> bool:
         return self.coefs == other.coefs
-
-    # modulo with another polring (is needed?)
-
-    # subtraction
-
-    # equal with another (at least for debug)
 
     def __repr__(self) -> str:
         return "PolRing(" + ", ".join([str(c) for c in self.coefs]) + ")"
