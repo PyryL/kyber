@@ -37,3 +37,15 @@ class TestPolynomialRing(unittest.TestCase):
         pol2 = PolynomialRing([2,  17,  8, 590, -11, -101, 91])
         # product before mod [30, 229, -101, 8760, -6772, 6532, 9312, 278430, -56838, 20053, 53558, -19375, 9687, 455]
         self.assertListEqual((pol1 * pol2).coefs, [30, 229, 3228, 2102, 3215, 3203, 2654, 2123, 3084, 79, 294, 599, 3029, 455])
+
+    def test_multiplication_with_random_inputs(self):
+        seed(42)
+        for _ in range(100):
+            pol1_degree, pol2_degree = randint(1, 500), randint(1, 500)
+            coefs_1 = [randint(-4000, 4000) for _ in range(pol1_degree)]
+            coefs_2 = [randint(-4000, 4000) for _ in range(pol2_degree)]
+            result = PolynomialRing(coefs_1) * PolynomialRing(coefs_2)
+            expected = (Polynomial(coefs_1) * Polynomial(coefs_2)) % Polynomial([1] + [0 for _ in range(n-1)] + [1])
+            self.assertEqual(len(result.coefs), len(expected.coef))
+            for i in range(len(result.coefs)):
+                self.assertEqual(result.coefs[i], expected.coef[i] % q)

@@ -1,12 +1,13 @@
 from kyber.constants import q, n
 
 class PolynomialRing:
-    def __init__(self, coefs: list[int]) -> None:
+    def __init__(self, coefs: list[int], check_limits: bool = True) -> None:
         """Input `(1, 2, 3)` represents `1+2x+3x^2`."""
         self._coefs = [int(c) for c in coefs]
         self._coef_limit = q
         self._degree_limit = n-1
-        self._apply_limits()
+        if check_limits:
+            self._apply_limits()
 
     @property
     def coefs(self) -> list[int]:
@@ -50,12 +51,9 @@ class PolynomialRing:
         return PolynomialRing(result)
 
     def __mul__(self, other: "PolynomialRing") -> "PolynomialRing":
-        result = [0 for _ in range(256)]
+        result = [0 for _ in range(len(self.coefs) + len(other.coefs) - 1)]
         for a in range(len(self.coefs)):
             for b in range(len(other.coefs)):
-                # check if the term of this degree would be too high
-                if a+b > 255:
-                    continue
                 result[a+b] += self.coefs[a] * other.coefs[b]
         return PolynomialRing(result)
 
