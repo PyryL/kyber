@@ -53,3 +53,9 @@ TOTAL                              331      0     92      0   100%
 ```
 
 For more detailed report, run `poetry run invoke coverage-report` and then open `htmlcov/index.html`.
+
+## Performance tests
+
+The asymmetric encryption part of Kyber (CPAPKE in the specification document) only works with fixed-lengthed input, but we can split larger payload into 32-byte chunks and encrypt them separately. Ciphertexts can be concatenated and the whole process can be reversed during decryption. Using this method, encryption is tested with about 10 kibibytes of random payload.
+
+Performance tests can be run with `poetry run invoke performance`.
