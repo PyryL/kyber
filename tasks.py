@@ -1,8 +1,13 @@
+import os
 from invoke import task
 
 @task
 def test(ctx):
     ctx.run("pytest tests/", pty=True)
+
+@task
+def performance(ctx):
+    ctx.run("python perf_tests/", pty=True)
 
 @task
 def coverage(ctx):
