@@ -2,7 +2,10 @@ from kyber.constants import q, n
 
 class PolynomialRing:
     def __init__(self, coefs: list[int], check_limits: bool = True) -> None:
-        """Input `(1, 2, 3)` represents `1+2x+3x^2`."""
+        """
+        :param coefs: Coefficients of the polynomial. E.g. `[1, 2, 3]` represents `1+2x+3x^2`.
+        :param check_limits: Set to `False` if coefs is already taken to modulo.
+        """
         self._coefs = [int(c) for c in coefs]
         self._coef_limit = q
         self._degree_limit = n-1
@@ -11,9 +14,11 @@ class PolynomialRing:
 
     @property
     def coefs(self) -> list[int]:
+        """Coefficients of the polynomial. E.g. `[1, 2, 3]` represents `1+2x+3x^2`."""
         return self._coefs
 
     def _apply_limits(self) -> None:
+        """Take this polynomial to modulo `x^n+1` and coefs to modulo `q`."""
         # apply degree limit by dividing self by x^n+1
         self._apply_polynomial_modulo_limit()
 
