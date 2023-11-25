@@ -50,6 +50,14 @@ poetry run invoke coverage-report
 
 after which the report will appear at `htmlcov/index.html`.
 
+### Performance tests
+
+Run performance tests with
+
+```
+poetry run invoke performance
+```
+
 ### Lint
 
 Run static style cheking with

@@ -12,8 +12,8 @@ def sample_generator(seed: int = 0) -> Generator[bytes, None, None]:
 class TestParse(unittest.TestCase):
     def test_parse_outputted_polynomial_characteristics(self):
         pol = parse(sample_generator())
-        self.assertEqual(len(pol.coef), 256)
-        for c in pol.coef:
+        self.assertEqual(len(pol.coefs), 256)
+        for c in pol.coefs:
             self.assertTrue(0 <= c and c <= 4095)
 
     def test_parse_outputs_same_polynomial_with_same_input(self):

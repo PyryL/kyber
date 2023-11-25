@@ -26,7 +26,14 @@ class TestCBD(unittest.TestCase):
             cbd(argument, eta)
 
     def test_cbd_result_polynomial_degree(self):
+        # test that CBD always outputs a polynomial with degree <= 255
+        # also make sure that the degree is not always less than 255
         eta = 5
-        argument = randbytes(320)
-        result = cbd(argument, eta)
-        self.assertEqual(len(result.coef), 256)
+        some_had_degree_255 = False
+        for _ in range(100):
+            argument = randbytes(320)
+            result = cbd(argument, eta)
+            self.assertLessEqual(len(result.coefs), 256)
+            if len(result.coefs) == 256:
+                some_had_degree_255 = True
+        self.assertTrue(some_had_degree_255)

@@ -1,15 +1,14 @@
 from random import randbytes
 import numpy as np
-from numpy.polynomial.polynomial import Polynomial
 from kyber.utils.cbd import cbd
 from kyber.utils.pseudo_random import prf
-from kyber.utils.modulo import matmod, polmod
 from kyber.utils.compression import compress, decompress
 from kyber.utils.encoding import encode, decode
 from kyber.constants import k, eta1, eta2, n, du, dv
 from kyber.utils.byte_conversion import int_to_bytes
 from kyber.utils.parse import parse
 from kyber.utils.pseudo_random import xof
+from kyber.entities.polring import PolynomialRing
 
 class Encrypt:
     def __init__(self, public_key: bytes, m: bytes = None, r: bytes = None) -> None:
@@ -38,32 +37,26 @@ class Encrypt:
         t, rho = self._pk[:-32], self._pk[-32:]
         t = np.array(decode(t, 12))
 
-        A = np.empty((k, k), Polynomial)
+        A = np.empty((k, k), PolynomialRing)
         for i in range(k):
             for j in range(k):
                 A[i][j] = parse(xof(rho, int_to_bytes(i), int_to_bytes(j)))
 
         N = 0
-        r = np.empty((k, ), Polynomial)
+        r = np.empty((k, ), PolynomialRing)
         for i in range(k):
             r[i] = cbd(prf(rb, int_to_bytes(N)), eta1)
-            r[i] = polmod(r[i])
             N += 1
 
-        e1 = np.empty((k, ), Polynomial)
+        e1 = np.empty((k, ), PolynomialRing)
         for i in range(k):
             e1[i] = cbd(prf(rb, int_to_bytes(N)), eta2)
-            e1[i] = polmod(e1[i])
             N += 1
 
         e2 = cbd(prf(rb, int_to_bytes(N)), eta2)
-        e2 = polmod(e2)
 
         u = np.matmul(A.T, r) + e1
         v = np.matmul(t.T, r) + e2 + decompress(decode(m, 1)[0], 1)
-
-        u = matmod(u)
-        v = polmod(v)
 
         u = compress(u, du)
         v = compress([v], dv)

@@ -1,14 +1,14 @@
 from math import floor
 from typing import Generator
-from numpy.polynomial.polynomial import Polynomial
 import numpy as np
 from kyber.constants import n, q
+from kyber.entities.polring import PolynomialRing
 
 def byte_to_int(b: bytes) -> int:
     """Returns the unsigned integer that the given big-endian byte array represents."""
     return int.from_bytes(b)
 
-def parse(stream: Generator[bytes, None, None]) -> Polynomial:
+def parse(stream: Generator[bytes, None, None]) -> PolynomialRing:
     """
     Deterministically creates a polynomial (degree n-1, each coefficient in
     range `0...4095` inclusive) from the given bytestream.
@@ -27,4 +27,4 @@ def parse(stream: Generator[bytes, None, None]) -> Polynomial:
             a[j] = d2
             j += 1
         i += 3
-    return Polynomial(a)
+    return PolynomialRing(a)

@@ -1,25 +1,25 @@
 from math import log2, ceil
-from numpy.polynomial.polynomial import Polynomial
 from kyber.constants import q
 from kyber.utils.round import normal_round
+from kyber.entities.polring import PolynomialRing
 
-def compress(pols: list[Polynomial], d: int) -> list[Polynomial]:
+def compress(pols: list[PolynomialRing], d: int) -> list[PolynomialRing]:
     """
     Reduces every coefficient of every polynomial in the given list
     to range `0...2**d-1` (inclusive).
     """
     result = []
     for pol in pols:
-        f = [compress_int(c, d) for c in pol.coef]
-        result.append(Polynomial(f))
+        f = [compress_int(c, d) for c in pol.coefs]
+        result.append(PolynomialRing(f))
     return result
 
-def decompress(pol: Polynomial, d: int) -> Polynomial:
+def decompress(pol: PolynomialRing, d: int) -> PolynomialRing:
     """
     Multiplies each coefficient of the given polynomial by `q/(2**d)`.
     Each coefficient of the given polynomial must be in range `0...2^d-1` (inclusive).
     """
-    return Polynomial([decompress_int(c, d) for c in pol.coef])
+    return PolynomialRing([decompress_int(c, d) for c in pol.coefs])
 
 def compress_int(x: int, d: int) -> int:
     """

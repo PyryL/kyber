@@ -21,7 +21,7 @@ def ccakem_generate_keys() -> tuple[bytes, bytes]:
         pk      # public key
     )
 
-def ccakem_encrypt(public_key: bytes) -> tuple[bytes, bytes]:
+def ccakem_encrypt(public_key: bytes, shared_secret_length: int = 32) -> tuple[bytes, bytes]:
     """
     Takes public key as input and returns (ciphertext, shered_secret) as a tuple.
     Shared secret is 32 bytes in length.
@@ -33,14 +33,14 @@ def ccakem_encrypt(public_key: bytes) -> tuple[bytes, bytes]:
     Kr = G(m + H(public_key))
     K, r = Kr[:32], Kr[32:]
     c = Encrypt(public_key, m, r).encrypt()
-    K = kdf(K + H(c), 32)
+    K = kdf(K + H(c), shared_secret_length)
 
     return (
         c,      # ciphertext
         K       # shared secret
     )
 
-def ccakem_decrypt(ciphertext: bytes, private_key: bytes) -> bytes:
+def ccakem_decrypt(ciphertext: bytes, private_key: bytes, shared_secret_length: int = 32) -> bytes:
     """
     Decrypts the given ciphertext with the private key.
     :returns Decrypted 32-byte shared secret.
@@ -62,5 +62,5 @@ def ccakem_decrypt(ciphertext: bytes, private_key: bytes) -> bytes:
     c = Encrypt(pk, m, r).encrypt()
 
     if c == ciphertext:
-        return kdf(K + H(c), 32)
-    return kdf(z + H(c), 32)
+        return kdf(K + H(c), shared_secret_length)
+    return kdf(z + H(c), shared_secret_length)

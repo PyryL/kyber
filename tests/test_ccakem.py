@@ -39,3 +39,11 @@ class TestCCAKEM(unittest.TestCase):
         ciphertext, shared_secret1 = ccakem_encrypt(public_key)
         shared_secret2 = ccakem_decrypt(ciphertext, private_key)
         self.assertEqual(shared_secret1, shared_secret2)
+
+    def test_ccakem_symmetry_with_long_shared_secret(self):
+        # generate 1000-byte shared secret
+        private_key, public_key = ccakem_generate_keys()
+        ciphertext, shared_secret1 = ccakem_encrypt(public_key, 1000)
+        shared_secret2 = ccakem_decrypt(ciphertext, private_key, 1000)
+        self.assertEqual(len(shared_secret1), 1000)
+        self.assertEqual(shared_secret1, shared_secret2)
