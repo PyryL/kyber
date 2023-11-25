@@ -7,8 +7,6 @@ class PolynomialRing:
         :param check_limits: Set to `False` if coefs is already taken to modulo.
         """
         self._coefs = [int(c) for c in coefs]
-        self._coef_limit = q
-        self._degree_limit = n-1
         if check_limits:
             self._apply_limits()
 
@@ -23,8 +21,7 @@ class PolynomialRing:
         self._apply_polynomial_modulo_limit()
 
         # apply coef limit
-        for i in range(len(self._coefs)):
-            self._coefs[i] %= self._coef_limit
+        self._coefs = [c % q for c in self._coefs]
 
         # remove trailing zero coefficients
         while len(self._coefs) > 0 and self._coefs[-1] == 0:
@@ -33,25 +30,31 @@ class PolynomialRing:
     def _apply_polynomial_modulo_limit(self) -> None:
         """Replaces `self._coefs` with the remainder of division `self._coefs / (x^n+1)`."""
         # this is an optimal version of polynomial long division
-        while len(self._coefs) >= n+1:
+        coef_count = len(self._coefs)
+        while coef_count >= n+1:
             self._coefs[-n-1] -= self._coefs[-1]
             self._coefs[-1] = 0
             while self._coefs[-1] == 0:
                 self._coefs.pop()
+                coef_count -= 1
 
     def __add__(self, other: "PolynomialRing") -> "PolynomialRing":
         result = []
-        for i in range(max(len(self.coefs), len(other.coefs))):
-            self_coef = self.coefs[i] if i < len(self.coefs) else 0
-            other_coef = other.coefs[i] if i < len(other.coefs) else 0
+        self_length = len(self._coefs)
+        other_length = len(other.coefs)
+        for i in range(max(self_length, other_length)):
+            self_coef = self.coefs[i] if i < self_length else 0
+            other_coef = other.coefs[i] if i < other_length else 0
             result.append(self_coef + other_coef)
         return PolynomialRing(result)
 
     def __sub__(self, other: "PolynomialRing") -> "PolynomialRing":
         result = []
-        for i in range(max(len(self.coefs), len(other.coefs))):
-            self_coef = self.coefs[i] if i < len(self.coefs) else 0
-            other_coef = other.coefs[i] if i < len(other.coefs) else 0
+        self_length = len(self._coefs)
+        other_length = len(other.coefs)
+        for i in range(max(self_length, other_length)):
+            self_coef = self.coefs[i] if i < self_length else 0
+            other_coef = other.coefs[i] if i < other_length else 0
             result.append(self_coef - other_coef)
         return PolynomialRing(result)
 
