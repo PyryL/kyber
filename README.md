@@ -9,7 +9,7 @@ Implementation of [CRYSTALS-Kyber](https://pq-crystals.org/kyber/index.shtml) en
 ## Documentation
 
 * [Requirements specification](docs/requirements.md)
-* [Implementation]()
+* [Implementation](docs/implementation.md)
 * [Testing](docs/tests.md)
 * [Usage guide](docs/usage.md)
 
