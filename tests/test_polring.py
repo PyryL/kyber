@@ -1,6 +1,7 @@
 import unittest
 from random import seed, randint
 from numpy.polynomial.polynomial import Polynomial
+import numpy as np
 from kyber.entities.polring import PolynomialRing
 from kyber.constants import q, n
 
@@ -10,6 +11,16 @@ class TestPolynomialRing(unittest.TestCase):
     def test_initialization(self):
         pol = PolynomialRing([71, -5, 0, 1, 3329, 3330, 3328, 15])
         self.assertListEqual(pol.coefs, [71, 3324, 0, 1, 0, 1, 3328, 15])
+
+    def test_initialization_with_no_limit_checks(self):
+        pol = PolynomialRing([15, -3, 4012, -10514, 3329], check_limits=False)
+        self.assertEqual(pol.coefs, [15, -3, 4012, -10514, 3329])
+
+    def test_init_with_numpy_array(self):
+        pol = PolynomialRing(np.array([-5, 123, 3330]))
+        self.assertEqual(pol.coefs, [3324, 123, 1])
+        self.assertEqual(type(pol.coefs), list)
+        self.assertEqual(type(pol.coefs[0]), int)
 
     def test_init_with_random_inputs(self):
         # test with 1000 samples that randomily initialized polring matches expected
@@ -49,3 +60,7 @@ class TestPolynomialRing(unittest.TestCase):
             self.assertEqual(len(result.coefs), len(expected.coef))
             for i in range(len(result.coefs)):
                 self.assertEqual(result.coefs[i], expected.coef[i] % q)
+
+    def test_representation(self):
+        pol = PolynomialRing([71, 3324, 0, 1, 0, 1, 3328, 15])
+        self.assertEqual(pol.__repr__(), "PolRing(71, 3324, 0, 1, 0, 1, 3328, 15)")
