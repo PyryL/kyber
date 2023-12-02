@@ -10,7 +10,18 @@ poetry install
 
 ## Usage
 
-Currently `kyber` provides three main functions that can be used directly from Python code. A sample usage is included in  `main.py`.
+Kyber has three main functions: key generation, encrypt and decrypt. Below is a diagram showing the workflow of key exchange.
+
+```mermaid
+sequenceDiagram
+Note over Alice: private_key, public_key = generate_keys()
+Alice->>Bob: public_key
+Note over Bob: ciphertext, shared_secret = encrypt(public_key)
+Bob->>Alice: ciphertext
+Note over Alice: shared_secret = decrypt(private_key, ciphertext)
+```
+
+`kyber` package can be used directly from Python code. A sample usage is included in  `main.py`.
 
 Kyber can also be used via command-line interface that can be accessed with `poetry run python cli.py`. It has four subcommands: `keygen`, `pubkey`, `encrypt` and `decrypt`. Run any subcommand with `-h` flag to get help. Below is a usage example:
 
