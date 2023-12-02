@@ -2,7 +2,7 @@
 
 ### Problem to be solved
 
-When two people want to communicate securely with each other using insecure network, they need to use encryption. One way of doing this would be to use asymmetric encryption, in which both would encrypt the payload with recipient's public key. However, asymmetric encryption is relatively slow when the payload gets longer. Therefore it is common to use asymmetric encryption to securely share a key that will then be used in faster asymmetric encryption. This is called key encapsulation mechanism, KEM [6].
+When two people want to communicate securely with each other using insecure network, they need to use encryption. One way of doing this would be to use asymmetric encryption, in which both would encrypt the payload with recipient's public key. However, asymmetric encryption is relatively slow when the payload gets longer. Therefore it is common to use asymmetric encryption to securely share a key that will then be used in faster symmetric encryption. This is called key encapsulation mechanism, KEM [6].
 
 Traditionally [Diffie–Hellman](https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange) method has been used for this [6], but because of Shor's algorithm it is thought not to be safe against powerful quantum computers. For this demand of quantum-resistant asymmetric encryption suitable for key-sharing was developed a new algorithm called CRYSTALS-Kyber. In 2022 National Institute of Standards and Technology (NIST) selected Kyber among three other algorithms to be the first post-quantum standards [4]. In August 2023 NIST released a candidate for the final standard [5] and this project is based on that.
 

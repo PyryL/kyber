@@ -5,11 +5,13 @@ from kyber.entities.polring import PolynomialRing
 
 class TestCompression(unittest.TestCase):
     def test_compression_symmetry(self):
+        # test that polynomial ring does not change when it is compressed and decompressed
         seed(42)
-        polynomial = PolynomialRing([randint(0, 2047) for _ in range(256)])
-        decompressed = decompress(polynomial, 11)
-        compressed = compress([decompressed], 11)[0]
-        self.assertListEqual(list(polynomial.coefs), list(compressed.coefs))
+        for _ in range(100):
+            polynomial = PolynomialRing([randint(0, 2047) for _ in range(256)])
+            decompressed = decompress(polynomial, 11)
+            compressed = compress([decompressed], 11)[0]
+            self.assertListEqual(list(polynomial.coefs), list(compressed.coefs))
 
     def test_compression(self):
         polynomial = PolynomialRing([416, 2913, 0, 1248])
@@ -40,4 +42,4 @@ class TestCompression(unittest.TestCase):
         # coefficient should not be greather than 2**d-1 = 7
         polynomial = PolynomialRing([2, 8, 3])
         with self.assertRaises(ValueError):
-            decompress(polynomial, 3)
+            decompress(polynomial, 3)# 
