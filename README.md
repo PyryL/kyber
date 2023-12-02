@@ -19,3 +19,4 @@ Implementation of [CRYSTALS-Kyber](https://pq-crystals.org/kyber/index.shtml) en
 * [Week 2](docs/week-2.md)
 * [Week 3](docs/week-3.md)
 * [Week 4](docs/week-4.md)
+* [Week 5](docs/week-5.md)
