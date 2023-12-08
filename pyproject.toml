@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "kyber"
 version = "1.0.0"
-description = "Implementation of Kyber encryption algorithm"
+description = "Implementation of Kyber post-quantum crypto algorithm"
 authors = ["Pyry Lahtinen <pyry@pyry.info>"]
 readme = "README.md"
 
