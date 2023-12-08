@@ -2,6 +2,10 @@
 __pycache__/
 .pytest_cache/
 
+# Derived files
+analysis/*.csv
+analysis/*.png
+
 # Coverage
 .coverage
 htmlcov/
