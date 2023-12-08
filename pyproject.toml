@@ -9,13 +9,13 @@ readme = "README.md"
 python = ">=3.11,<3.13"
 numpy = "^1.26.1"
 pycryptodome = "^3.19.0"
-coverage = "^7.3.2"
 invoke = "^2.2.0"
-pylint = "^3.0.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
 matplotlib = "^3.8.2"
+pylint = "^3.0.2"
+coverage = "^7.3.2"
 
 # help pytest find modules (https://stackoverflow.com/a/49033954)
 [tool.pytest.ini_options]
