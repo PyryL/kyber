@@ -1,6 +1,6 @@
 import unittest
 from random import seed, randbytes
-from kyber.encryption import Decrypt
+from kyber.encryption import decrypt
 from kyber.constants import k, n, du, dv
 
 class TestDecrypt(unittest.TestCase):
@@ -10,7 +10,7 @@ class TestDecrypt(unittest.TestCase):
     def test_decryption_outputs_valid_shared_secret(self):
         private_key = randbytes(32*12*k)
         ciphertext = randbytes(du*k*n//8 + dv*n//8)
-        shared_secret = Decrypt(private_key, ciphertext).decrypt()
+        shared_secret = decrypt(private_key, ciphertext)
         self.assertEqual(type(shared_secret), bytes)
         self.assertEqual(len(shared_secret), 32)
 
@@ -19,11 +19,11 @@ class TestDecrypt(unittest.TestCase):
         invalid_private_key = randbytes(32*12*k + 1)
         valid_ciphertext = randbytes(du*k*n//8 + dv*n//8)
         with self.assertRaises(ValueError):
-            Decrypt(invalid_private_key, valid_ciphertext)
+            decrypt(invalid_private_key, valid_ciphertext)
 
     def test_decryption_raises_with_invalid_ciphertext(self):
         # this ciphertext is one byte too short
         valid_private_key = randbytes(32*12*k)
         invalid_ciphertext = randbytes(du*k*n//8 + dv*n//8 - 1)
         with self.assertRaises(ValueError):
-            Decrypt(valid_private_key, invalid_ciphertext)
+            decrypt(valid_private_key, invalid_ciphertext)

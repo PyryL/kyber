@@ -1,5 +1,5 @@
 from secrets import token_bytes
-from kyber.encryption import generate_keys, Encrypt, Decrypt
+from kyber.encryption import generate_keys, Encrypt, decrypt
 from kyber.utils.pseudo_random import H, G, kdf
 from kyber.constants import k, n, du, dv
 
@@ -56,7 +56,7 @@ def ccakem_decrypt(ciphertext: bytes, private_key: bytes, shared_secret_length: 
 
     assert h == H(pk)
 
-    m = Decrypt(sk, ciphertext).decrypt()
+    m = decrypt(sk, ciphertext)
     Kr = G(m + h)
     K, r = Kr[:32], Kr[32:]
     c = Encrypt(pk, m, r).encrypt()

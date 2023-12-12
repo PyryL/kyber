@@ -1,5 +1,5 @@
 import unittest
-from kyber.encryption import generate_keys, Encrypt, Decrypt
+from kyber.encryption import generate_keys, Encrypt, decrypt
 
 class TestIntegration(unittest.TestCase):
     def test_encryption_symmetry(self):
@@ -7,6 +7,6 @@ class TestIntegration(unittest.TestCase):
         private_key, public_key = generate_keys()
         encrypter = Encrypt(public_key)
         ciphertext = encrypter.encrypt()
-        decrypted_shared_secret = Decrypt(private_key, ciphertext).decrypt()
+        decrypted_shared_secret = decrypt(private_key, ciphertext)
         self.assertEqual(encrypter.secret, decrypted_shared_secret)
         self.assertEqual(len(encrypter.secret), 32)

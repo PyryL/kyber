@@ -1,5 +1,5 @@
 import unittest
-from random import seed,randbytes
+from random import seed, randbytes
 from base64 import b64decode
 from kyber.utils.cbd import cbd
 
