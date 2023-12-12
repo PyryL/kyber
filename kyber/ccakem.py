@@ -1,4 +1,4 @@
-from random import randbytes
+from secrets import token_bytes
 from kyber.encryption import generate_keys, Encrypt, Decrypt
 from kyber.utils.pseudo_random import H, G, kdf
 from kyber.constants import k, n, du, dv
@@ -9,7 +9,7 @@ def ccakem_generate_keys() -> tuple[bytes, bytes]:
     :returns (private_key, public_key) tuple
     """
 
-    z = randbytes(32)
+    z = token_bytes(32)
     sk, pk = generate_keys()
     sk = sk + pk + H(pk) + z
 
@@ -29,7 +29,7 @@ def ccakem_encrypt(public_key: bytes, shared_secret_length: int = 32) -> tuple[b
 
     assert len(public_key) == 12 * k * n//8 + 32
 
-    m = H(randbytes(32))
+    m = H(token_bytes(32))
     Kr = G(m + H(public_key))
     K, r = Kr[:32], Kr[32:]
     c = Encrypt(public_key, m, r).encrypt()

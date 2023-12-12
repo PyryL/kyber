@@ -1,4 +1,4 @@
-from random import randbytes
+from secrets import token_bytes
 import numpy as np
 from kyber.constants import k, eta1
 from kyber.utils.pseudo_random import prf, G, xof
@@ -14,7 +14,7 @@ def generate_keys() -> tuple:
     :returns (private_key, public_key)
     """
 
-    d = randbytes(32)
+    d = token_bytes(32)
     rho, sigma = G(d)[:32], G(d)[32:]
 
     A = np.empty((k, k), PolynomialRing)
