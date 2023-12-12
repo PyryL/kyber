@@ -8,7 +8,7 @@ from kyber.utils.encoding import encode
 from kyber.utils.parse import parse
 from kyber.entities.polring import PolynomialRing
 
-def generate_keys() -> tuple:
+def generate_keys() -> tuple[bytes, bytes]:
     """
     Generates a new Kyber keypair.
     :returns (private_key, public_key)

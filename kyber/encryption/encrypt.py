@@ -25,7 +25,7 @@ class Encrypt:
         """The 32-bit shared secret that was encrypted."""
         return self._m
 
-    def encrypt(self):
+    def encrypt(self) -> bytes:
         """
         Encrypts 32-bit random shared secret.
         :returns Ciphertext

@@ -4,7 +4,7 @@ from kyber.utils.encoding import encode, decode
 from kyber.constants import n, k, du, dv
 from kyber.entities.polring import PolynomialRing
 
-def decrypt(private_key, ciphertext) -> bytes:
+def decrypt(private_key: bytes, ciphertext: bytes) -> bytes:
     """
     Decrypts the given ciphertext with the given private key.
     :returns Decrypted 32-bit shared secret
