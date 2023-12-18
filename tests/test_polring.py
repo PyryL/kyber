@@ -22,6 +22,11 @@ class TestPolynomialRing(unittest.TestCase):
         self.assertEqual(type(pol.coefs), list)
         self.assertEqual(type(pol.coefs[0]), int)
 
+    def test_init_with_remainder_zero(self):
+        # when taken modulo x^n+1, this polynomial should result 0
+        pol = PolynomialRing([1] + [0]*255 + [1])
+        self.assertEqual(pol.coefs, [])
+
     def test_init_with_random_inputs(self):
         # test with 1000 samples that randomily initialized polring matches expected
         seed(42)

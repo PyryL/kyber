@@ -34,7 +34,7 @@ class PolynomialRing:
         while coef_count >= n+1:
             self._coefs[-n-1] -= self._coefs[-1]
             self._coefs[-1] = 0
-            while self._coefs[-1] == 0:
+            while coef_count > 0 and self._coefs[-1] == 0:
                 self._coefs.pop()
                 coef_count -= 1
 
