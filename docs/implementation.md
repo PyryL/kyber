@@ -77,3 +77,9 @@ This module includes multiple functions that use SHA-3 hash algorithm family to 
 ### Round
 
 This small module provides a function that rounds floats in a "traditional" way, that is, ties rounded up instead of away from zero. For example, Python's built-in round function outputs `round(-3.5)=-4` whereas `normal_round(-3.5)=-3`.
+
+## Time and space requirement
+
+The complexity of all key generation, encryption and decryption is `O(1)` with fixed payload length of 32 bytes. However, when variable-length payload is en/decrypted, function must be called repeatedly for each 32-byte chunk of payload. Therefore real time requirement of encryption and decryption functions is `O(n)` where n is the length of the payload.
+
+All functions are expected to run in constant memory space.
