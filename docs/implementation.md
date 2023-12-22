@@ -80,6 +80,10 @@ This small module provides a function that rounds floats in a "traditional" way,
 
 ## Time and space requirement
 
-The complexity of all key generation, encryption and decryption is `O(1)` with fixed payload length of 32 bytes. However, when variable-length payload is en/decrypted, function must be called repeatedly for each 32-byte chunk of payload. Therefore real time requirement of encryption and decryption functions is `O(n)` where n is the length of the payload.
+The complexity of all key generation, encryption and decryption is `O(1)` with fixed payload length of 32 bytes. However, when variable-length payload is en/decrypted, function must be called repeatedly for each 32-byte chunk of payload. Therefore real complexity of encryption and decryption functions is `O(n)` where n is the length of the payload. This linear time requirement can be empirically tested as the orange plot below shows.
 
 All functions are expected to run in constant memory space.
+
+![](misc/aes_comparison.png)
+
+(_Plot created with `analysis/aes_comparison.py`_)
