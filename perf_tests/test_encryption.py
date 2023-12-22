@@ -1,6 +1,6 @@
 from random import randbytes
 from time import time
-from kyber.encryption import Encrypt, Decrypt, generate_keys
+from kyber.encryption import Encrypt, decrypt, generate_keys
 from kyber.constants import k, n, du, dv
 
 def run(payload: bytes) -> tuple[float, float, float]:
@@ -19,7 +19,7 @@ def run(payload: bytes) -> tuple[float, float, float]:
     ciphertext_chunk_size = du*k*n//8 + dv*n//8
     restored_payload = bytearray()
     for i in range(0, len(ciphertext), ciphertext_chunk_size):
-        restored_payload += Decrypt(private_key, ciphertext[i:i+ciphertext_chunk_size]).decrypt()
+        restored_payload += decrypt(private_key, ciphertext[i:i+ciphertext_chunk_size])
     
     t3 = time()
 
